@@ -31,6 +31,7 @@ equalsButton.addEventListener('click', () => {
     result = operate(operator, num1, num2);
     smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
     display.textContent = result;
+    num1 = result;
 });
 
 function decideValues() {
