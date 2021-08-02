@@ -9,6 +9,7 @@ let num1 = null;
 let num2 = null;
 let result = null;
 let operator = null;
+let isEqualsPressed;
 
 numberButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -19,10 +20,10 @@ numberButtons.forEach(button => {
 
 operatorButtons.forEach(button => {
     button.addEventListener('click', (e) => {
+        partialOperator = e.target.textContent;
         decideValues();
+        checkValues();
         operator = e.target.textContent;
-        display.textContent = '';
-        smallDisplay.textContent = num1 + ' ' + operator;
     });
 });
 
@@ -32,6 +33,7 @@ equalsButton.addEventListener('click', () => {
     smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
     display.textContent = result;
     num1 = result;
+    isEqualsPressed = true;
 });
 
 clearButton.addEventListener('click', () => {
@@ -41,6 +43,7 @@ clearButton.addEventListener('click', () => {
     operator = null;
     display.textContent = '';
     smallDisplay.textContent = '';
+    isEqualsPressed = false;
 });
 
 function decideValues() {
@@ -48,6 +51,22 @@ function decideValues() {
         num1 = display.textContent;
     } else {
         num2 = display.textContent;
+    }
+}
+
+function checkValues() {
+    if (isEqualsPressed) {
+        smallDisplay.textContent = num1 + ' ' + partialOperator;
+        display.textContent = '';
+        isEqualsPressed = false;
+    } else if (num1 !== null && num2 !== null) {
+        result = operate(operator, num1, num2);
+        num1 = result;
+        smallDisplay.textContent = num1 + ' ' + partialOperator;
+        display.textContent = '';
+    } else {
+        display.textContent = '';
+        smallDisplay.textContent = num1 + ' ' + partialOperator;
     }
 }
 
