@@ -4,6 +4,8 @@ const equalsButton = document.querySelector('#equals');
 const clearButton = document.querySelector('#clear-button');
 const display = document.querySelector('.display');
 const smallDisplay = document.querySelector('.small-display');
+const dotButton = document.querySelector('#dot');
+const deleteButton = document.querySelector('#delete');
 
 let num1 = null;
 let num2 = null;
@@ -15,15 +17,19 @@ numberButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         pressedButton = e.target.textContent;
         display.textContent += pressedButton;
+        if (display.textContent.includes('.')) {
+            dotButton.disabled = true;
+        }
         equalsButton.disabled = false;
-        // enableOperatorButtons();
+        enableOperatorButtons();
     });
 });
 
 operatorButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         equalsButton.disabled = true;
-        // disableOperatorButtons();
+        disableOperatorButtons();
+        dotButton.disabled = false;
         partialOperator = e.target.textContent;
         decideValues();
         checkValues();
@@ -35,6 +41,7 @@ equalsButton.addEventListener('click', () => {
     num2 = display.textContent;
     isEqualsPressed = true;
     equalsButton.disabled = true;
+    dotButton.disabled = false;
     if (num1 === null || num2 === null) {
         return;
     } else{
@@ -42,7 +49,7 @@ equalsButton.addEventListener('click', () => {
         checkDecimalsAndRound();
         smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
         display.textContent = result;
-        num1 = result;
+        num1 = null;
     }
 });
 
@@ -56,6 +63,11 @@ clearButton.addEventListener('click', () => {
     isEqualsPressed = false;
     equalsButton.disabled = false;
     enableOperatorButtons();
+    dotButton.disabled = false;
+});
+
+deleteButton.addEventListener('click', () => {
+    display.textContent = display.textContent.slice(0, display.textContent.length - 1);
 });
 
 function decideValues() {
@@ -85,7 +97,8 @@ function checkValues() {
 }
 
 function checkDecimalsAndRound() {
-    if (result % 1 !== 0) {
+    if (result === '∞ Don\'t divide by 0 please ∞') return;
+    else if (result % 1 !== 0) {
         result = Math.round(result * 100) / 100;
     }
 }
@@ -112,7 +125,7 @@ function multiply(num1, num2) {
 
 function divide(num1, num2) {
     if (num2 == 0) {
-        return '∞ Don\'t divide by 0 ∞'
+        return '∞ Don\'t divide by 0 please ∞'
     } else {
         return (+num1 / +num2);
     }
