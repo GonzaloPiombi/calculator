@@ -30,6 +30,7 @@ operatorButtons.forEach(button => {
 equalsButton.addEventListener('click', () => {
     num2 = display.textContent;
     result = operate(operator, num1, num2);
+    checkDecimalsAndRound();
     smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
     display.textContent = result;
     num1 = result;
@@ -61,12 +62,19 @@ function checkValues() {
         isEqualsPressed = false;
     } else if (num1 !== null && num2 !== null) {
         result = operate(operator, num1, num2);
+        checkDecimalsAndRound();
         num1 = result;
         smallDisplay.textContent = num1 + ' ' + partialOperator;
         display.textContent = '';
     } else {
         display.textContent = '';
         smallDisplay.textContent = num1 + ' ' + partialOperator;
+    }
+}
+
+function checkDecimalsAndRound() {
+    if (result % 1 !== 0) {
+        result = Math.round(result * 100) / 100;
     }
 }
 
