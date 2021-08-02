@@ -15,11 +15,15 @@ numberButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         pressedButton = e.target.textContent;
         display.textContent += pressedButton;
+        equalsButton.disabled = false;
+        // enableOperatorButtons();
     });
 });
 
 operatorButtons.forEach(button => {
     button.addEventListener('click', (e) => {
+        equalsButton.disabled = true;
+        // disableOperatorButtons();
         partialOperator = e.target.textContent;
         decideValues();
         checkValues();
@@ -29,12 +33,17 @@ operatorButtons.forEach(button => {
 
 equalsButton.addEventListener('click', () => {
     num2 = display.textContent;
-    result = operate(operator, num1, num2);
-    checkDecimalsAndRound();
-    smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
-    display.textContent = result;
-    num1 = result;
     isEqualsPressed = true;
+    equalsButton.disabled = true;
+    if (num1 === null || num2 === null) {
+        return;
+    } else{
+        result = operate(operator, num1, num2);
+        checkDecimalsAndRound();
+        smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
+        display.textContent = result;
+        num1 = result;
+    }
 });
 
 clearButton.addEventListener('click', () => {
@@ -45,6 +54,8 @@ clearButton.addEventListener('click', () => {
     display.textContent = '';
     smallDisplay.textContent = '';
     isEqualsPressed = false;
+    equalsButton.disabled = false;
+    enableOperatorButtons();
 });
 
 function decideValues() {
@@ -62,6 +73,7 @@ function checkValues() {
         isEqualsPressed = false;
     } else if (num1 !== null && num2 !== null) {
         result = operate(operator, num1, num2);
+        if (isNaN(result)) return;
         checkDecimalsAndRound();
         num1 = result;
         smallDisplay.textContent = num1 + ' ' + partialOperator;
@@ -76,6 +88,14 @@ function checkDecimalsAndRound() {
     if (result % 1 !== 0) {
         result = Math.round(result * 100) / 100;
     }
+}
+
+function disableOperatorButtons() {
+    operatorButtons.forEach(button => button.disabled = true);
+}
+
+function enableOperatorButtons() {
+    operatorButtons.forEach(button => button.disabled = false);
 }
 
 function add(num1, num2) {
