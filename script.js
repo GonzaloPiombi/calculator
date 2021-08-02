@@ -34,6 +34,15 @@ equalsButton.addEventListener('click', () => {
     num1 = result;
 });
 
+clearButton.addEventListener('click', () => {
+    num1 = null;
+    num2 = null;
+    result = null;
+    operator = null;
+    display.textContent = '';
+    smallDisplay.textContent = '';
+});
+
 function decideValues() {
     if (num1 === null) {
         num1 = display.textContent;
