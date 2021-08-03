@@ -56,8 +56,16 @@ body {
     background-color: #c5c5c5;
 }
 
+.number-button:active {
+    background-color: #a5a5a5;
+}
+
 #toggle:hover {
     background-color: #c5c5c5;
+}
+
+#toggle:active {
+    background-color: #a5a5a5;
 }
 
 .button-grid .operator-button {
@@ -66,6 +74,9 @@ body {
 
 .button-grid .operator-button:hover {
     background-color: #4d8623;
+}
+.button-grid .operator-button:active {
+    background-color: #3b651c;
 }
 
 .button-grid .operator-button:disabled {
@@ -84,6 +95,10 @@ body {
     background-color: #4d8623;
 }
 
+#equals:active {
+    background-color: #3b651c;
+}
+
 #equals:disabled {
     color: black;
 }
@@ -94,6 +109,10 @@ body {
 }
 
 #clear-button:hover {
+    background-color: #b13d3d;
+}
+
+#clear-button:active {
     background-color: #a03434;
 }
 
@@ -103,4 +122,8 @@ body {
 
 #delete:hover {
     background-color: #437188;
+}
+
+#delete:active {
+    background-color: #396175;
 }
