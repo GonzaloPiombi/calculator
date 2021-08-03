@@ -15,30 +15,70 @@ let operator = null;
 let isEqualsPressed;
 
 numberButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        pressedButton = e.target.textContent;
-        display.textContent += pressedButton;
-        if (display.textContent.includes('.')) {
-            dotButton.disabled = true;
-        }
-        equalsButton.disabled = false;
-        enableOperatorButtons();
-    });
+    button.addEventListener('click', function(e) {
+        pressNumber(e.target.textContent);
+    })
 });
 
 operatorButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        equalsButton.disabled = true;
-        disableOperatorButtons();
-        dotButton.disabled = false;
-        partialOperator = e.target.textContent;
-        decideValues();
-        checkValues();
-        operator = e.target.textContent;
+    button.addEventListener('click', function(e) {
+        pressOperator(e.target.textContent);
     });
 });
 
 equalsButton.addEventListener('click', () => {
+    pressEquals();
+});
+
+clearButton.addEventListener('click', () => {
+    pressClear();
+});
+
+deleteButton.addEventListener('click', () => {
+    display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+});
+
+togglePositiveNegative.addEventListener('click', () => {
+   pressToggle();
+});
+
+document.addEventListener('keydown', e => {
+    if (e.key >= 0 || e.key === '.') {
+        pressNumber(e.key)
+    } else if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === '*') {
+        pressOperator(e.key);
+    } else if (e.key === '=' || e.key === 'Enter') {
+        pressEquals();
+    } else if (e.key === 'c' || e.key === 'C') {
+        pressClear();
+    } else if (e.key === 'Backspace') {
+        display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+    } else if (e.key === 't' || e.key === 'T') {
+        pressToggle();
+    }
+});
+
+function pressNumber(e) {
+    pressedButton = e;
+    display.textContent += pressedButton;
+    if (display.textContent.includes('.')) {
+        dotButton.disabled = true;
+    }
+    equalsButton.disabled = false;
+    enableOperatorButtons();
+}
+
+function pressOperator(e) {
+    equalsButton.disabled = true;
+    disableOperatorButtons();
+    dotButton.disabled = false;
+    partialOperator = e;
+    decideValues();
+    checkValues();
+    operator = e;
+} 
+
+function pressEquals() {
     num2 = display.textContent;
     isEqualsPressed = true;
     equalsButton.disabled = true;
@@ -52,9 +92,9 @@ equalsButton.addEventListener('click', () => {
         display.textContent = result;
         num1 = null;
     }
-});
+}
 
-clearButton.addEventListener('click', () => {
+function pressClear() {
     num1 = null;
     num2 = null;
     result = null;
@@ -65,19 +105,15 @@ clearButton.addEventListener('click', () => {
     equalsButton.disabled = false;
     enableOperatorButtons();
     dotButton.disabled = false;
-});
+}
 
-deleteButton.addEventListener('click', () => {
-    display.textContent = display.textContent.slice(0, display.textContent.length - 1);
-});
-
-togglePositiveNegative.addEventListener('click', () => {
+function pressToggle() {
     if (display.textContent >= 0) {
         display.textContent = '-' + display.textContent;
     } else {
         display.textContent = display.textContent.slice(1);
     }
-});
+}
 
 function decideValues() {
     if (num1 === null) {
@@ -149,6 +185,7 @@ function operate(operator, num1, num2) {
             return subtract(num1, num2);
             break;
         case 'X':
+        case '*':
             return multiply(num1, num2);
             break;
         case '/':
