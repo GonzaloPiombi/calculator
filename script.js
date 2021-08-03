@@ -32,6 +32,7 @@ clearButton.addEventListener('click', () => { pressClear() });
 
 deleteButton.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+    checkIfDecimal();
 });
 
 togglePositiveNegative.addEventListener('click', () => { pressToggle(); });
@@ -47,6 +48,7 @@ document.addEventListener('keydown', e => {
         pressClear();
     } else if (e.key === 'Backspace') {
         display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+        checkIfDecimal();
     } else if (e.key === 't' || e.key === 'T') {
         pressToggle();
     }
@@ -54,9 +56,10 @@ document.addEventListener('keydown', e => {
 
 function pressNumber(e) {
     pressedButton = e;
-    display.textContent += pressedButton;
-    if (display.textContent.includes('.')) {
+    if (display.textContent.includes('.') && e === '.') {
         dotButton.disabled = true;
+    } else {
+        display.textContent += pressedButton;
     }
     equalsButton.disabled = false;
     enableOperatorButtons();
@@ -84,11 +87,7 @@ function pressEquals() {
         smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
         display.textContent = result;
         num1 = null;
-        if (display.textContent.includes('.')) {
-            dotButton.disabled = true;
-        } else {
-            dotButton.disabled = false;
-        }
+        checkIfDecimal();
     }
 }
 
@@ -143,6 +142,14 @@ function checkDecimalsAndRound() {
     if (result === '∞ Don\'t divide by 0 please ∞') return;
     else if (result % 1 !== 0) {
         result = Math.round(result * 100) / 100;
+    }
+}
+
+function checkIfDecimal() {
+    if (display.textContent.includes('.')) {
+        dotButton.disabled = true;
+    } else {
+        dotButton.disabled = false;
     }
 }
 
