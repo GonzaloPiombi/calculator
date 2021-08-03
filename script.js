@@ -79,7 +79,6 @@ function pressEquals() {
     if (num1 === null || num2 === null) {
         return;
     } else {
-        dotButton.disabled = false;
         result = operate(operator, num1, num2);
         checkDecimalsAndRound();
         smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
