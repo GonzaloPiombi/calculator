@@ -6,6 +6,7 @@ const display = document.querySelector('.display');
 const smallDisplay = document.querySelector('.small-display');
 const dotButton = document.querySelector('#dot');
 const deleteButton = document.querySelector('#delete');
+const togglePositiveNegative = document.querySelector('#toggle');
 
 let num1 = null;
 let num2 = null;
@@ -44,7 +45,7 @@ equalsButton.addEventListener('click', () => {
     dotButton.disabled = false;
     if (num1 === null || num2 === null) {
         return;
-    } else{
+    } else {
         result = operate(operator, num1, num2);
         checkDecimalsAndRound();
         smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
@@ -68,6 +69,14 @@ clearButton.addEventListener('click', () => {
 
 deleteButton.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+});
+
+togglePositiveNegative.addEventListener('click', () => {
+    if (display.textContent >= 0) {
+        display.textContent = '-' + display.textContent;
+    } else {
+        display.textContent = display.textContent.slice(1);
+    }
 });
 
 function decideValues() {
