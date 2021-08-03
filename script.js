@@ -26,21 +26,15 @@ operatorButtons.forEach(button => {
     });
 });
 
-equalsButton.addEventListener('click', () => {
-    pressEquals();
-});
+equalsButton.addEventListener('click', () => { pressEquals(); });
 
-clearButton.addEventListener('click', () => {
-    pressClear();
-});
+clearButton.addEventListener('click', () => { pressClear() });
 
 deleteButton.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, display.textContent.length - 1);
 });
 
-togglePositiveNegative.addEventListener('click', () => {
-   pressToggle();
-});
+togglePositiveNegative.addEventListener('click', () => { pressToggle(); });
 
 document.addEventListener('keydown', e => {
     if (e.key >= 0 || e.key === '.') {
@@ -82,15 +76,20 @@ function pressEquals() {
     num2 = display.textContent;
     isEqualsPressed = true;
     equalsButton.disabled = true;
-    dotButton.disabled = false;
     if (num1 === null || num2 === null) {
         return;
     } else {
+        dotButton.disabled = false;
         result = operate(operator, num1, num2);
         checkDecimalsAndRound();
         smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
         display.textContent = result;
         num1 = null;
+        if (display.textContent.includes('.')) {
+            dotButton.disabled = true;
+        } else {
+            dotButton.disabled = false;
+        }
     }
 }
 
