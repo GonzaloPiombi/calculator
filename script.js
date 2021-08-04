@@ -60,6 +60,7 @@ function pressNumber(e) {
     }
     equalsButton.disabled = false;
     enableOperatorButtons();
+    equalsButton.focus();
 }
 
 function pressOperator(e) {
@@ -70,6 +71,7 @@ function pressOperator(e) {
     decideValues();
     checkValues();
     operator = e;
+    equalsButton.focus();
 } 
 
 function pressEquals() {
@@ -148,7 +150,7 @@ function checkValues() {
 }
 
 function checkDecimalsAndRound() {
-    if (result === '∞ Don\'t divide by 0 please ∞') return;
+    if (result === '∞ Don\'t divide by 0 ∞') return;
     else if (result % 1 !== 0) {
         result = Math.round(result * 100) / 100;
     }
@@ -184,7 +186,7 @@ function multiply(num1, num2) {
 
 function divide(num1, num2) {
     if (num2 == 0) {
-        return '∞ Don\'t divide by 0 please ∞'
+        return '∞ Don\'t divide by 0 ∞'
     } else {
         return (+num1 / +num2);
     }
