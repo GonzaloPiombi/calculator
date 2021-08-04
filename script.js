@@ -28,12 +28,9 @@ operatorButtons.forEach(button => {
 
 equalsButton.addEventListener('click', () => { pressEquals(); });
 
-clearButton.addEventListener('click', () => { pressClear() });
+clearButton.addEventListener('click', () => { pressClear(); });
 
-deleteButton.addEventListener('click', () => {
-    display.textContent = display.textContent.slice(0, display.textContent.length - 1);
-    checkIfDecimal();
-});
+deleteButton.addEventListener('click', () => { pressDelete(); });
 
 togglePositiveNegative.addEventListener('click', () => { pressToggle(); });
 
@@ -47,8 +44,7 @@ document.addEventListener('keydown', e => {
     } else if (e.key === 'c' || e.key === 'C') {
         pressClear();
     } else if (e.key === 'Backspace') {
-        display.textContent = display.textContent.slice(0, display.textContent.length - 1);
-        checkIfDecimal();
+        pressDelete();
     } else if (e.key === 't' || e.key === 'T') {
         pressToggle();
     }
@@ -111,6 +107,18 @@ function pressToggle() {
     } else {
         display.textContent = display.textContent.slice(1);
     }
+}
+
+function pressDelete() {
+    let lastChar = smallDisplay.textContent.slice(-1);
+    if (display.textContent === '' && (lastChar === '+' || lastChar === '-' || lastChar === '/' || lastChar === 'X')) {
+        smallDisplay.textContent = smallDisplay.textContent.slice(0, smallDisplay.textContent.length - 1);
+        operator = null;
+        enableOperatorButtons();
+        isEqualsPressed = true;
+    }
+    display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+    checkIfDecimal();
 }
 
 function decideValues() {
