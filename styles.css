@@ -20,6 +20,7 @@ body {
     border: solid 2px black;
     border-radius: 5px;
     box-sizing: border-box;
+    color: #3e3e3e;
     font-size: 1.8rem;
     height: 90px;
     margin-bottom: 40px;

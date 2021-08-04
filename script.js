@@ -56,6 +56,7 @@ document.addEventListener('keydown', e => {
 
 function pressNumber(e) {
     pressedButton = e;
+    if (display.textContent.length > 17) return;
     if (display.textContent.includes('.') && e === '.') {
         dotButton.disabled = true;
     } else {
