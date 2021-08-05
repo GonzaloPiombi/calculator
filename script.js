@@ -78,7 +78,7 @@ function pressEquals() {
     num2 = display.textContent;
     isEqualsPressed = true;
     equalsButton.disabled = true;
-    if (num1 === null || num2 === null) {
+    if (num1 === null || num2 === null || operator === null) {
         return;
     } else {
         result = operate(operator, num1, num2);
