@@ -52,7 +52,7 @@ document.addEventListener('keydown', e => {
 
 function pressNumber(e) {
     pressedButton = e;
-    if (display.textContent.length > 17) return;
+    if (display.textContent.length > 15) return;
     if (display.textContent.includes('.') && e === '.') {
         dotButton.disabled = true;
     } else {
@@ -85,6 +85,7 @@ function pressEquals() {
         checkDecimalsAndRound();
         smallDisplay.textContent = num1 + ' ' + operator + ' ' + num2;
         display.textContent = result;
+        changeDisplayFontSize();
         num1 = null;
         checkIfDecimal();
     }
@@ -101,6 +102,8 @@ function pressClear() {
     equalsButton.disabled = false;
     enableOperatorButtons();
     dotButton.disabled = false;
+    smallDisplay.style = 'font-size: 1.7rem';
+    display.style = 'font-size: 1.8rem';
 }
 
 function pressToggle() {
@@ -161,6 +164,21 @@ function checkIfDecimal() {
         dotButton.disabled = true;
     } else {
         dotButton.disabled = false;
+    }
+}
+
+function changeDisplayFontSize () {
+    if (smallDisplay.textContent.length > 30) {
+        smallDisplay.style = 'font-size: 0.7rem';
+    } else if (smallDisplay.textContent.length > 16) {
+        smallDisplay.style = 'font-size: 0.9rem';
+    } else {
+        smallDisplay.style = 'font-size: 1.7rem';
+    }
+    if (display.textContent.length > 16) {
+        display.style = 'font-size: 1.4rem';
+    } else {
+        display.style = 'font-size: 1.8rem';
     }
 }
 
